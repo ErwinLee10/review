@@ -51,36 +51,6 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public ReviewDTO getByProductId(Long productId) {
-		Optional<Review> optional = reviewRepository.findById(productId);
-
-		if (optional.isEmpty()) {
-			throw new ReviewNotFoundException("Review deleted.");
-		}
-
-		Review review = optional.get();
-		ReviewDTO reviewDTO = new ReviewDTO();
-		BeanUtils.copyProperties(review, reviewDTO);
-
-		return reviewDTO;
-	}
-
-	@Override
-	public ReviewDTO getByCustomerId(Long customerId) {
-		Optional<Review> optional = reviewRepository.findById(customerId);
-
-		if (optional.isEmpty()) {
-			throw new ReviewNotFoundException("Review deleted.");
-		}
-
-		Review review = optional.get();
-		ReviewDTO reviewDTO = new ReviewDTO();
-		BeanUtils.copyProperties(review, reviewDTO);
-
-		return reviewDTO;
-	}
-
-	/*@Override
 	public List<ReviewDTO> findAll() {
 		Iterable<Review> iterable = reviewRepository.findAll();
 
@@ -95,14 +65,14 @@ public class ReviewServiceImpl implements ReviewService{
 		}).collect(Collectors.toList());
 
 		return result;
-	}*/
+	}
 
 	@Override
-	public void deleteByCustomerIdAndId(Long customerId, Long id) {
+	public void deleteByUserIdAndId(Long userId, Long id) {
 		Optional<Review> reviewOpt = reviewRepository.findById(id);
 		if(reviewOpt.isPresent()) {
 			Review review = reviewOpt.get();
-			if(review.getCustomerId() == customerId) {
+			if(review.getUserId() == userId) {
 				reviewRepository.deleteById(id);
 			}
 		}		

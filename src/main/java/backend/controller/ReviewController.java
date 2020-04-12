@@ -28,49 +28,19 @@ public class ReviewController{
 		return reviewService.findAll();
 	}*/
 
-	@GetMapping("/reviews/{productId}")
+	@GetMapping("/reviews/{userId}")
 	@ResponseStatus(HttpStatus.OK)
-	public ReviewDTO getByProductId(@PathVariable Long productId) {
-		return reviewService.getByProductId(productId);
+	public ReviewDTO getById(@PathVariable Long userId) {
+		return reviewService.getById(userId);
 	}
 
-	@GetMapping("/reviews/{id}")
-	@ResponseStatus(HttpStatus.OK)
-	public ReviewDTO getById(@PathVariable Long id) {
-		return reviewService.getById(id);
-	}
-
-	@GetMapping("/reviews/{customerId}")
-	@ResponseStatus(HttpStatus.OK)
-	public ReviewDTO getByCustomerId(@PathVariable Long customerId) {
-		return reviewService.getByCustomerId(customerId);
-	}
-
-	/*@PostMapping("/orders/{transactionId}/reviews")
-	@ResponseStatus(HttpStatus.CREATED)
-	public Long create(@RequestBody ReviewDTO reviewDTO) {
-		return reviewService.create(reviewDTO);
-	}*/
-
-	@PostMapping("/orders/{customerId}/{productId}/reviews")
+	@PostMapping("/users/{userId}/reviews")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Long create(@RequestBody ReviewDTO reviewDTO) {
 		return reviewService.create(reviewDTO);
 	}
 
-	@PutMapping("/orders/{customerId}/reviews/{id}")
-	@ResponseStatus(HttpStatus.OK)
-	public void update(@RequestBody ReviewDTO reviewDTO) {
-		reviewService.update(reviewDTO);
-	}
-
-	/*@PutMapping("/orders/{productId}/reviews/{id}")
-	@ResponseStatus(HttpStatus.OK)
-	public void update(@RequestBody ReviewDTO reviewDTO) {
-		reviewService.update(reviewDTO);
-	}
-
-	@PutMapping("/orders/{transactionId}/reviews/{id}")
+	@PutMapping("/users/{userId}/reviews/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public void update(@RequestBody ReviewDTO reviewDTO) {
 		reviewService.update(reviewDTO);
@@ -80,12 +50,6 @@ public class ReviewController{
 	@ResponseStatus(HttpStatus.OK)
 	public void delete(@PathVariable Long userId, @PathVariable("id") Long id) {
 		reviewService.deleteByUserIdAndId(userId, id);
-	}*/
-
-	@DeleteMapping(value = "/orders/{customerId}/reviews/{id}")
-	@ResponseStatus(HttpStatus.OK)
-	public void delete(@PathVariable Long customerId, @PathVariable("id") Long id) {
-		reviewService.deleteByCustomerIdAndId(customerId, id);
 	}
 	
 

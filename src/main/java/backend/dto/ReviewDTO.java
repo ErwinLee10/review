@@ -9,9 +9,8 @@ import lombok.Setter;
 @Setter
 public class ReviewDTO {
        private Long id;
+       private Long userId;
        private Long productId;
-       /*private Long transactionId;*/
-       private Long customerId;
        private Integer starRating;
        private String remarks;
        private String createdBy;
