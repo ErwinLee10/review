@@ -2,6 +2,7 @@
    (
       id          BIGSERIAL    	NOT NULL PRIMARY KEY,
       userId    BIGSERIAL    	NOT NULL,
+      sellerId    BIGSERIAL   NOT NULL,
       starRating    BIGSERIAL    	NOT NULL,
       productId BIGSERIAL        NOT NULL,
       remarks		VARCHAR(255),

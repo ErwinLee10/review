@@ -11,7 +11,7 @@ public interface ReviewService {
 
 	public void update(ReviewDTO reviewDTO);
 
-	public ReviewDTO getById(Long userId);
+	public ReviewDTO getById(Long sellerId);
 
 	public List<ReviewDTO> findAll();
 

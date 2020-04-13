@@ -10,6 +10,7 @@ import lombok.Setter;
 public class ReviewDTO {
        private Long id;
        private Long userId;
+       private Long sellerId;
        private Long productId;
        private Integer starRating;
        private String remarks;

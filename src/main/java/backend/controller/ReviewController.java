@@ -28,10 +28,10 @@ public class ReviewController{
 		return reviewService.findAll();
 	}*/
 
-	@GetMapping("/reviews/{userId}")
+	@GetMapping("/reviews/{sellerId}")
 	@ResponseStatus(HttpStatus.OK)
-	public ReviewDTO getById(@PathVariable Long userId) {
-		return reviewService.getById(userId);
+	public ReviewDTO getById(@PathVariable Long sellerId) {
+		return reviewService.getById(sellerId);
 	}
 
 	@PostMapping("/users/{userId}/reviews")
