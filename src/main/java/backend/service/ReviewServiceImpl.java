@@ -6,6 +6,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.hibernate.type.TrueFalseType;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,17 +31,14 @@ public class ReviewServiceImpl implements ReviewService{
 
 	@Override
 	public void update(ReviewDTO reviewDTO, Long userId, Long id) {
-		Optional<Review> reviewOpt = reviewRepository.findById(id);
+		/*Optional<Review> reviewOpt = reviewRepository.findById(id);
 		if(reviewOpt.isPresent()) {
-			Review review1 = reviewOpt.get();
-			if (review1.getId() == id && review1.getUserId() == userId) {
+			Review review = reviewOpt.get();
+			if(review.getUserId() == userId) {
 				reviewRepository.deleteById(id);
-
 			}
-		}
-
+		}*/
 		Review review = new Review();
-
 		BeanUtils.copyProperties(reviewDTO, review);
 		reviewRepository.save(review);
 	}
@@ -62,10 +60,8 @@ public class ReviewServiceImpl implements ReviewService{
 				return null;
 			}
 		}).collect(Collectors.toList());
-		for (int i = 0; i < result.size(); i++) {
-			if (result.get(i) == null) {
-				result.remove(i);
-			}
+		while(result.remove(null)){
+			result=result;
 		}
 		return result;
 	}
