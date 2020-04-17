@@ -27,13 +27,18 @@ public class ReviewController{
 	public List<ReviewDTO> findAll() {
 		return reviewService.findAll();
 	}*/
-
-	@GetMapping("/reviews/{sellerId}")
+	@GetMapping("/reviews")
 	@ResponseStatus(HttpStatus.OK)
-	public ReviewDTO getById(@PathVariable Long sellerId) {
-		return reviewService.getById(sellerId);
+	public List<ReviewDTO> findAll() {
+		return reviewService.findAll();
 	}
 
+	@GetMapping("sellers/{sellerId}/reviews")
+	@ResponseStatus(HttpStatus.OK)
+	public List<ReviewDTO> getBySellerId(@PathVariable Long sellerId) {
+
+		return reviewService.getBySellerId(sellerId);
+	}
 	@PostMapping("/users/{userId}/reviews")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Long create(@RequestBody ReviewDTO reviewDTO) {
@@ -42,8 +47,8 @@ public class ReviewController{
 
 	@PutMapping("/users/{userId}/reviews/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void update(@RequestBody ReviewDTO reviewDTO) {
-		reviewService.update(reviewDTO);
+	public void update(@RequestBody ReviewDTO reviewDTO, Long userId, Long id) {
+		reviewService.update(reviewDTO, userId, id);
 	}
 
 	@DeleteMapping(value = "/users/{userId}/reviews/{id}")

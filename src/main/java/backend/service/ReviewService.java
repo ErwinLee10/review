@@ -9,9 +9,12 @@ public interface ReviewService {
 
 	public Long create(ReviewDTO reviewDTO);
 
-	public void update(ReviewDTO reviewDTO);
+	public void update(ReviewDTO reviewDTO, Long userId, Long id);
 
-	public ReviewDTO getById(Long sellerId);
+
+	public List<ReviewDTO> getBySellerId(Long sellerId);
+
+
 
 	public List<ReviewDTO> findAll();
 

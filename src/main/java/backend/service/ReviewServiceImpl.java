@@ -29,27 +29,46 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public void update(ReviewDTO reviewDTO) {
+	public void update(ReviewDTO reviewDTO, Long userId, Long id) {
+		Optional<Review> reviewOpt = reviewRepository.findById(id);
+		if(reviewOpt.isPresent()) {
+			Review review1 = reviewOpt.get();
+			if (review1.getId() == id && review1.getUserId() == userId) {
+				reviewRepository.deleteById(id);
+
+			}
+		}
+
 		Review review = new Review();
+
 		BeanUtils.copyProperties(reviewDTO, review);
 		reviewRepository.save(review);
 	}
 
 	@Override
-	public ReviewDTO getById(Long id) {
-		Optional<Review> optional = reviewRepository.findById(id);
-		
-		if (optional.isEmpty()) {
-			throw new ReviewNotFoundException("Review deleted.");
-		}
-		
-		Review review = optional.get();
-		ReviewDTO reviewDTO = new ReviewDTO();
-		BeanUtils.copyProperties(review, reviewDTO);
-		
-		return reviewDTO;
-	}
+	public List<ReviewDTO> getBySellerId(Long sellerId) {
+		Iterable<Review> iterable = reviewRepository.findAll();
 
+		List<ReviewDTO> result = StreamSupport.stream(iterable.spliterator(), false).map(new Function<Review, ReviewDTO>() {
+			@Override
+			public ReviewDTO apply(Review review) {
+				ReviewDTO reviewDTO = new ReviewDTO();
+				if (review.getSellerId() == sellerId) {
+					BeanUtils.copyProperties(review, reviewDTO);
+					return reviewDTO;
+				}
+
+
+				return null;
+			}
+		}).collect(Collectors.toList());
+		for (int i = 0; i < result.size(); i++) {
+			if (result.get(i) == null) {
+				result.remove(i);
+			}
+		}
+		return result;
+	}
 	@Override
 	public List<ReviewDTO> findAll() {
 		Iterable<Review> iterable = reviewRepository.findAll();
