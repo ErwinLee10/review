@@ -1,19 +1,17 @@
 package backend.service;
 
+import backend.dto.ReviewDTO;
+import backend.model.Review;
+import backend.repository.ReviewRepository;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
-import org.hibernate.type.TrueFalseType;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import backend.exception.ReviewNotFoundException;
-import backend.dto.ReviewDTO;
-import backend.model.Review;
-import backend.repository.ReviewRepository;
 
 @Service
 public class ReviewServiceImpl implements ReviewService{
@@ -30,14 +28,19 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public void update(ReviewDTO reviewDTO, Long userId, Long id) {
-		/*Optional<Review> reviewOpt = reviewRepository.findById(id);
+	public void deleteByUserIdAndId(Long userId, Long id) {
+		Optional<Review> reviewOpt = reviewRepository.findById(id);
 		if(reviewOpt.isPresent()) {
 			Review review = reviewOpt.get();
-			if(review.getUserId() == userId) {
+			if(review.getUserId().equals(userId)) {
 				reviewRepository.deleteById(id);
 			}
-		}*/
+		}
+	}
+
+	@Override
+	public void update(ReviewDTO reviewDTO) {
+
 		Review review = new Review();
 		BeanUtils.copyProperties(reviewDTO, review);
 		reviewRepository.save(review);
@@ -51,7 +54,7 @@ public class ReviewServiceImpl implements ReviewService{
 			@Override
 			public ReviewDTO apply(Review review) {
 				ReviewDTO reviewDTO = new ReviewDTO();
-				if (review.getSellerId() == sellerId) {
+				if (review.getSellerId().equals(sellerId)) {
 					BeanUtils.copyProperties(review, reviewDTO);
 					return reviewDTO;
 				}
@@ -82,14 +85,5 @@ public class ReviewServiceImpl implements ReviewService{
 		return result;
 	}
 
-	@Override
-	public void deleteByUserIdAndId(Long userId, Long id) {
-		Optional<Review> reviewOpt = reviewRepository.findById(id);
-		if(reviewOpt.isPresent()) {
-			Review review = reviewOpt.get();
-			if(review.getUserId() == userId) {
-				reviewRepository.deleteById(id);
-			}
-		}		
-	}	
+
 }

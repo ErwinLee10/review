@@ -1,15 +1,15 @@
 package backend.service;
 
-import java.util.List;
-
 import backend.dto.ReviewDTO;
+
+import java.util.List;
 
 
 public interface ReviewService {
 
 	public Long create(ReviewDTO reviewDTO);
 
-	public void update(ReviewDTO reviewDTO, Long userId, Long id);
+	public void update(ReviewDTO reviewDTO);
 
 
 	public List<ReviewDTO> getBySellerId(Long sellerId);
