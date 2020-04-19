@@ -13,9 +13,9 @@ deploy:
   provider: elasticbeanstalk
   region: "ap-southeast-1"
   app: "review"
-  env: "review-dev"
+  env: "review-stag"
   bucket_name: "elasticbeanstalk-ap-southeast-1-413765782488"
-  bucket_path: "review-dev"
+  bucket_path: "review-stag"
   on:
     all_branches: true
     condition: $TRAVIS_BRANCH =~ ^release\/.*$	  
