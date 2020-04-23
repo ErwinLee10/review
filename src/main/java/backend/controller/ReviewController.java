@@ -31,6 +31,16 @@ public class ReviewController{
 
 		return reviewService.getBySellerId(sellerId);
 	}
+
+	@GetMapping("sellers/{sellerId}/avg-rating")
+	@ResponseStatus(HttpStatus.OK)
+	public int getAverageRatingBySellerId(@PathVariable Long sellerId) {
+
+		return reviewService.getAverageRatingBySellerId(sellerId);
+	}
+
+
+
 	@PostMapping("/users/{userId}/reviews")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Long create(@RequestBody ReviewDTO reviewDTO) {

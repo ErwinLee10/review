@@ -10,6 +10,7 @@ public interface ReviewService {
 	public Long create(ReviewDTO reviewDTO);
 
 	public void update(ReviewDTO reviewDTO);
+	public int getAverageRatingBySellerId(Long sellerId);
 
 
 	public List<ReviewDTO> getBySellerId(Long sellerId);

@@ -78,22 +78,9 @@ public class Review implements Serializable{
         return sellerId;
     }
 
-    public Long setSellerId(Long sellerId) {
-        return sellerId;
-    }
 
-    public Long setUserId(Long userId) {
-        return userId;
-    }
-    public Long setProductId(Long productId) {
-        return productId;
-    }
 
-    public Long setId(Long id) {
-        return id;
-    }
-
-    public Integer setStarRating(int starRating) {
+    public int getStarRating() {
         return starRating;
     }
 }

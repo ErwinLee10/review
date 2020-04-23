@@ -30,7 +30,7 @@ class ReviewServiceTest {
 	@Test
 	void addReviewTest() {
 		ReviewDTO reviewDTO = new ReviewDTO();
-		/*reviewDTO.setUserId(1l);
+		reviewDTO.setUserId(1l);
 		reviewDTO.setSellerId(1l);
 		reviewDTO.setProductId(1l);
 		reviewDTO.setStarRating(5);
@@ -39,7 +39,7 @@ class ReviewServiceTest {
         reviewDTO.setLastUpdatedBy("some other Name");
 		//ReviewDTO.setCreatedDate();
 		//ReviewDTO.setLastUpdatedDate();*/
-		Review review = new Review();
+		/*Review review = new Review();
 		review.setUserId(1l);
 		review.setSellerId(1l);
 		review.setProductId(1l);
@@ -47,14 +47,23 @@ class ReviewServiceTest {
 		review.setRemarks("some remarks");
 		review.setCreatedBy("some Name");
 		review.setLastUpdatedBy("some other Name");
-		review = reviewRepository.save(review);
-		
+		review = reviewRepository.save(review);*/
+		Review review = new Review();
+		review.setId(1l);
 
+		when(reviewRepository.save(any())).thenReturn(review);
 
-
-
-
+		reviewService.create(reviewDTO);
 		verify(reviewRepository, times(1)).save(any(Review.class));
+
+
+
+
+
+
+
+
+		//verify(reviewRepository, times(1)).save(any(Review.class));
 	}
 	
 	@Test
