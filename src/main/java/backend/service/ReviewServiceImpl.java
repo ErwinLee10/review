@@ -72,7 +72,7 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 	@Override
 	public int getAverageRatingBySellerId(Long sellerId){
-		//ReviewService reviewService = new ReviewService();
+
 		Iterable<Review> iterable = reviewRepository.findAll();
 
 		List<ReviewDTO> result = StreamSupport.stream(iterable.spliterator(), false).map(new Function<Review, ReviewDTO>() {
@@ -121,6 +121,8 @@ public class ReviewServiceImpl implements ReviewService{
 
 		return result;
 	}
+
+
 
 
 }

@@ -1,5 +1,4 @@
 package backend.model;
-
 import java.time.ZonedDateTime;
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -10,10 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+
 
 @Entity
 @Getter

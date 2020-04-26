@@ -19,7 +19,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
 	@ExceptionHandler(ReviewNotFoundException.class)
-    public final ResponseEntity<?> handleInvalidUsernameOrPasswordException(Exception ex, WebRequest request) {
+    public final ResponseEntity<?> handleReviewNotFoundException(Exception ex, WebRequest request) {
         return new ResponseEntity<String>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 

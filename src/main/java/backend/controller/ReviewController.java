@@ -14,11 +14,7 @@ public class ReviewController{
 	@Autowired
 	private ReviewService reviewService;
 
-	/*@GetMapping("/reviews")
-	@ResponseStatus(HttpStatus.OK)
-	public List<ReviewDTO> findAll() {
-		return reviewService.findAll();
-	}*/
+	
 	@GetMapping("/reviews")
 	@ResponseStatus(HttpStatus.OK)
 	public List<ReviewDTO> findAll() {
