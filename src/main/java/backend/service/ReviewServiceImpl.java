@@ -1,12 +1,14 @@
 package backend.service;
 
 import backend.dto.ReviewDTO;
+import backend.exception.ReviewNotFoundException;
 import backend.model.Review;
 import backend.repository.ReviewRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -27,8 +29,6 @@ public class ReviewServiceImpl implements ReviewService{
 		return review.getId();
 	}
 
-
-
 	@Override
 	public void deleteByUserIdAndId(Long userId, Long id) {
 		Optional<Review> reviewOpt = reviewRepository.findById(id);
@@ -42,7 +42,6 @@ public class ReviewServiceImpl implements ReviewService{
 
 	@Override
 	public void update(ReviewDTO reviewDTO) {
-
 		Review review = new Review();
 		BeanUtils.copyProperties(reviewDTO, review);
 		reviewRepository.save(review);
@@ -50,60 +49,43 @@ public class ReviewServiceImpl implements ReviewService{
 
 	@Override
 	public List<ReviewDTO> getBySellerId(Long sellerId) {
-		Iterable<Review> iterable = reviewRepository.findAll();
-
-		List<ReviewDTO> result = StreamSupport.stream(iterable.spliterator(), false).map(new Function<Review, ReviewDTO>() {
-			@Override
-			public ReviewDTO apply(Review review) {
+		List<Review> list = reviewRepository.findBySellerId(sellerId);
+		List<ReviewDTO> result = new ArrayList<ReviewDTO>();
+		if (list != null && list.size() > 0) {
+			for (Review review: list) {
 				ReviewDTO reviewDTO = new ReviewDTO();
-				if (review.getSellerId().equals(sellerId)) {
-					BeanUtils.copyProperties(review, reviewDTO);
-					return reviewDTO;
-				}
-
-
-				return null;
+				BeanUtils.copyProperties(review, reviewDTO);
+				result.add(reviewDTO);
 			}
-		}).collect(Collectors.toList());
-		while(result.remove(null)){
-			result=result;
 		}
 		return result;
 	}
+	
+	@Override
+	public ReviewDTO getBySellerIdAndId(Long sellerId, Long reviewId) {
+		Optional<Review> review = reviewRepository.findById(reviewId);
+		if (review.isEmpty()) {
+			throw new ReviewNotFoundException("Not review found");
+		}
+		ReviewDTO reviewDTO = new ReviewDTO();
+		BeanUtils.copyProperties(review.get(), reviewDTO);
+		return reviewDTO;
+	}
+	
 	@Override
 	public int getAverageRatingBySellerId(Long sellerId){
-
-		Iterable<Review> iterable = reviewRepository.findAll();
-
-		List<ReviewDTO> result = StreamSupport.stream(iterable.spliterator(), false).map(new Function<Review, ReviewDTO>() {
-			@Override
-			public ReviewDTO apply(Review review) {
-				ReviewDTO reviewDTO = new ReviewDTO();
-				if (review.getSellerId().equals(sellerId)) {
-					BeanUtils.copyProperties(review, reviewDTO);
-					return reviewDTO;
-				}
-
-
-				return null;
+		List<Review> list = reviewRepository.findBySellerId(sellerId);
+		int totalRating = 0;
+		
+		if (list != null && list.size() > 0) {
+			for (Review review: list){
+				totalRating = totalRating + review.getStarRating();
 			}
-		}).collect(Collectors.toList());
-		while(result.remove(null)){
-			result=result;
+			return totalRating / list.size();
 		}
-		int totalRating=0;
-		int numOfReviews=result.size();
-
-		for (int i=0; i< result.size();i++){
-			Review review = new Review();
-			BeanUtils.copyProperties(result.get(i), review);
-			totalRating=totalRating+review.getStarRating();
-
-		}
-		int averageRating=totalRating/numOfReviews;
-		return averageRating;
+		//Default is 5 star
+		return 5;
 	}
-
 
 	@Override
 	public List<ReviewDTO> findAll() {
@@ -121,8 +103,4 @@ public class ReviewServiceImpl implements ReviewService{
 
 		return result;
 	}
-
-
-
-
 }

@@ -30,8 +30,12 @@ public class Review implements Serializable{
     private Long userId;
     @Column(name="seller_id")
     private Long sellerId;
+    @Column(name="reviewer_name")
+    private String reviewerName;
     @Column(name="product_id")
     private Long productId;
+    @Column(name="product_name")
+    private String productName;
     @Column(name="star_rating")
     private Integer starRating;
     private String remarks;

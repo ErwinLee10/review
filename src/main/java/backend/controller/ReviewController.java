@@ -14,47 +14,49 @@ public class ReviewController{
 	@Autowired
 	private ReviewService reviewService;
 
-	
-	@GetMapping("/reviews")
+	@GetMapping("/reviews/")
 	@ResponseStatus(HttpStatus.OK)
 	public List<ReviewDTO> findAll() {
 		return reviewService.findAll();
 	}
-
-	@GetMapping("sellers/{sellerId}/reviews")
+	
+	@GetMapping("/sellers/{sellerId}/reviews")
 	@ResponseStatus(HttpStatus.OK)
 	public List<ReviewDTO> getBySellerId(@PathVariable Long sellerId) {
-
 		return reviewService.getBySellerId(sellerId);
 	}
+	
+	@GetMapping("/reviews/{sellerId}/reviews/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public ReviewDTO getBySellerIdAndId(@PathVariable Long sellerId, @PathVariable Long id) {
+		return reviewService.getBySellerIdAndId(sellerId, id);
+	}
 
-	@GetMapping("sellers/{sellerId}/avg-rating")
+	@GetMapping("/sellers/{sellerId}/avg-rating")
 	@ResponseStatus(HttpStatus.OK)
 	public int getAverageRatingBySellerId(@PathVariable Long sellerId) {
-
 		return reviewService.getAverageRatingBySellerId(sellerId);
 	}
 
-
-
-	@PostMapping("/users/{userId}/reviews")
+	@PostMapping("/sellers/{sellerId}/reviews")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Long create(@RequestBody ReviewDTO reviewDTO) {
+	public Long create(@PathVariable Long sellerId, @RequestBody ReviewDTO reviewDTO) {
+		reviewDTO.setUserId(sellerId);
 		return reviewService.create(reviewDTO);
 	}
 
-	@PutMapping("/users/{userId}/reviews/{id}")
+	@PutMapping("/sellers/{sellerId}/reviews/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void update(@RequestBody ReviewDTO reviewDTO) {
-
+	public void update(@PathVariable Long sellerId, @RequestBody ReviewDTO reviewDTO) {
+		reviewDTO.setUserId(sellerId);
 		reviewService.update(reviewDTO);
 	}
 
 
-	@DeleteMapping(value = "/users/{userId}/reviews/{id}")
+	@DeleteMapping(value = "/sellers/{sellerId}/reviews/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void delete(@PathVariable Long userId, @PathVariable("id") Long id) {
-		reviewService.deleteByUserIdAndId(userId, id);
+	public void delete(@PathVariable Long sellerId, @PathVariable("id") Long id) {
+		reviewService.deleteByUserIdAndId(sellerId, id);
 	}
 
 
