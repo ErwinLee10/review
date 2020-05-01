@@ -26,7 +26,7 @@ public class ReviewController{
 		return reviewService.getBySellerId(sellerId);
 	}
 	
-	@GetMapping("/reviews/{sellerId}/reviews/{id}")
+	@GetMapping("/sellers/{sellerId}/reviews/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public ReviewDTO getBySellerIdAndId(@PathVariable Long sellerId, @PathVariable Long id) {
 		return reviewService.getBySellerIdAndId(sellerId, id);
