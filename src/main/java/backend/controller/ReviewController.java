@@ -26,10 +26,10 @@ public class ReviewController{
 		return reviewService.getBySellerId(sellerId);
 	}
 	
-	@GetMapping("/sellers/{sellerId}/reviews/{id}")
+	@GetMapping("/sellers/{sellerId}/reviews/{reviewId}")
 	@ResponseStatus(HttpStatus.OK)
-	public ReviewDTO getBySellerIdAndId(@PathVariable Long sellerId, @PathVariable Long id) {
-		return reviewService.getBySellerIdAndId(sellerId, id);
+	public ReviewDTO getBySellerIdAndId(@PathVariable Long sellerId, @PathVariable Long reviewId) {
+		return reviewService.getBySellerIdAndId(sellerId, reviewId);
 	}
 
 	@GetMapping("/sellers/{sellerId}/avg-rating")
@@ -45,10 +45,11 @@ public class ReviewController{
 		return reviewService.create(reviewDTO);
 	}
 
-	@PutMapping("/sellers/{sellerId}/reviews/{id}")
+	@PutMapping("/sellers/{sellerId}/reviews/{reviewId}")
 	@ResponseStatus(HttpStatus.OK)
-	public void update(@PathVariable Long sellerId, @RequestBody ReviewDTO reviewDTO) {
+	public void update(@PathVariable Long sellerId, @PathVariable Long reviewId, @RequestBody ReviewDTO reviewDTO) {
 		reviewDTO.setUserId(sellerId);
+		reviewDTO.setId(reviewId);
 		reviewService.update(reviewDTO);
 	}
 
